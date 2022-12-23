@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-
+static char	*buffer;
 char	*get_next_line(int fd);
 
 #endif
