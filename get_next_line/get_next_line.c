@@ -5,93 +5,63 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: thmusik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 15:58:09 by thmusik           #+#    #+#             */
-/*   Updated: 2022/12/23 11:05:06 by thmusik          ###   ########.fr       */
+/*   Created: 2023/01/06 13:07:32 by thmusik           #+#    #+#             */
+/*   Updated: 2023/01/09 10:04:30 by thmusik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <unistd.h>
-# include <stdlib.h>
 #include "get_next_line.h"
 
-# include <stdio.h>
-# include <fcntl.h>
-# include <string.h>
-
-
-char	*get_next_line(int fd)
+char	*get_next(void)
 {
-	unsigned int	linecount;
-	char	*string;
+	char	*next;
+	int		index1;
+	int		index2;
 
-	linecount = 0;
-	//Buffer Memory Allocation Section
-	if (fd < 0)
+	index1 = 0;
+	while (string[index1] && string[index1] != '\n')
+		index1++;
+	if (!string[index1])
 	{
-		//printf("File Descriptor Error\n");
+		free(string);
 		return (NULL);
 	}
-	if (buffer == NULL)
-	{
-		buffer = (char*)calloc(sizeof(char), 1024 + 1);// Memory Leak?, Need Calloc?
-		if (!buffer)
-		{
-			free(buffer);
-			//printf("Buffer Memory Allocation Error\n");
-			return (NULL);
-		}
-		read(fd, buffer, 1024 + 1);
-	}
-	if (buffer[0] != '\0' && buffer[0] != '\n')
-	{
-		//Line Lenght Section
-		while (buffer[linecount] != '\n' && buffer[linecount] != '\0')
-			linecount++;
-		//Returned String Memory Allocation Section
-		string = (char*)calloc(sizeof(char), linecount + 2);
-		linecount = 0;
-		//Buffer To String Section
-		while (buffer[linecount] != '\0')
-		{
-			if (buffer[linecount] == '\n')
-			{
-				string[linecount] = buffer[linecount];
-				linecount++;
-				break ;
-			}
-			string[linecount] = buffer[linecount];
-			linecount++;
-		}
-		if (buffer[linecount] == '\0')
-			string[linecount] = '\0';
-		//Buffer Move Section
-		buffer += linecount;// Memory Leak?, Secmentation Fault?, Need Temp?
-	}
-	else if (buffer[0] == '\n')
-	{
-		buffer += 1;
-		string = (char*)calloc(sizeof(char), 2);
-		string[0] = '\n';
-	}
-	else
-	{
-		//printf("Buffer Empty\n");
-		string = NULL;
-	}
-	return (string);
+	next = (char *)malloc(sizeof(char) * (ft_strlen(string) - index1 + 1));
+	if (!next)
+		return (NULL);
+	index1++;
+	index2 = 0;
+	while (string[index1])
+		next[index2++] = string[index1++];
+	next[index2] = '\0';
+	free(string);
+	return (next);
 }
 
-// int main(void)
-// {
-// 	int		fd;
-// 	int		lineplacement;
-// 	char	*string;
+char *get_next_line(int fd)
+{
+	char 		*line;
 
-// 	fd = open("test.txt", O_RDONLY);
-// 	lineplacement = 1;
-// 	string = get_next_line(fd);
-// 	printf("fd: %i\n", fd);
-// 	printf("line%i: %s\n", lineplacement, string);
-// 	free(string);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	string = get_string(fd);
+	if (!string)
+		return (NULL);
+	line = get_line();
+	string = get_next();
+	return (line);
+}
+
+// int	main(void)
+// {
+// 	char	*str;
+// 	int		fd;
+
+// 	fd = open("test", O_RDONLY);
+// 	str = get_next_line(fd);
+// 	printf("get: %s", str);
+// 	free(str);
+// 	str = get_next_line(fd);
+// 	printf("get: %s", str);
 // 	return (0);
 // }
