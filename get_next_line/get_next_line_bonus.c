@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thmusik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 13:07:32 by thmusik           #+#    #+#             */
-/*   Updated: 2023/01/09 10:51:26 by thmusik          ###   ########.fr       */
+/*   Updated: 2023/01/11 16:58:09 by thmusik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next(char *string)
 {
@@ -41,15 +41,15 @@ char	*get_next(char *string)
 char *get_next_line(int fd)
 {
 	char 		*line;
-	static char *string;
+	static char *string[1024];
 
 	if (fd >= 0 && BUFFER_SIZE > 0)
 	{
-		string = get_string(fd, string);
-		if (!string)
+		string[fd] = get_string(fd, string[fd]);
+		if (!string[fd])
 			return (NULL);
-		line = get_line(string);
-		string = get_next(string);
+		line = get_line(string[fd]);
+		string[fd] = get_next(string[fd]);
 		return (line);
 	}
 	return (NULL);
