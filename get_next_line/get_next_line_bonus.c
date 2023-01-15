@@ -6,7 +6,7 @@
 /*   By: thmusik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 13:07:32 by thmusik           #+#    #+#             */
-/*   Updated: 2023/01/11 16:58:09 by thmusik          ###   ########.fr       */
+/*   Updated: 2023/01/15 13:21:51 by thmusik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ char	*get_next(char *string)
 	return (next);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	char 		*line;
-	static char *string[1024];
+	char		*line;
+	static char	*string[1024];
 
 	if (fd >= 0 && BUFFER_SIZE > 0)
 	{

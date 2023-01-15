@@ -6,7 +6,7 @@
 /*   By: thmusik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 15:51:50 by thmusik           #+#    #+#             */
-/*   Updated: 2023/01/11 16:46:26 by thmusik          ###   ########.fr       */
+/*   Updated: 2023/01/15 13:22:15 by thmusik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-char *ft_strjoin(char *s, char *buff);
+char	*ft_strjoin(char *s, char *buff);
 
-char *ft_strchr(char *s, int c);
+char	*ft_strchr(char *s, int c);
 
-size_t ft_strlen(char *s);
+size_t	ft_strlen(char *s);
 
-char *get_string(int fd, char *string);
+char	*get_string(int fd, char *string);
 
-char *get_line(char *string);
+char	*get_line(char *string);
 
-char *get_next(char *string);
+char	*get_next(char *string);
 
 char	*get_next_line(int fd);
 
